@@ -1,2 +1,7 @@
+import Test.Framework
+import Test.Framework.Providers.QuickCheck2
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = defaultMainWithOpts [
+
+  ] mempty

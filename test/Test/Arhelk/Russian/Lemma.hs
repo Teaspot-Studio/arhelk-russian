@@ -1,4 +1,4 @@
-module Arhelk.Russian.Lemma(
+module Test.Arhelk.Russian.Lemma(
     testModule
   ) where 
 

@@ -4,6 +4,7 @@ import Test.Framework.Providers.QuickCheck2
 import qualified Arhelk.Russian.Lemma as Lemma
 
 main :: IO ()
-main = defaultMainWithOpts
-  Lemma.testModule
+main = defaultMainWithOpts [
+    Lemma.testModule
+  ]
   mempty

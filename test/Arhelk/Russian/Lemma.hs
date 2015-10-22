@@ -7,9 +7,10 @@ import Test.Framework.Providers.HUnit
 import Data.Text 
 import Test.HUnit
 
-testModule :: [TF.Test]
-testModule = [
-    testCase "Корень дерев" $ isSameRoot ["дерево", "деревья", "дерева", "деревьев", "дереве"]
+testModule :: TF.Test
+testModule = TF.testGroup "Lemmanization" [
+    testCase "Root дерев" $ isSameRoot ["дерево", "деревья", "дерева", "деревьев", "дереве"]
+  , testCase "Root красн" $ isSameRoot ["красный", "красная", "красное", "красные", "красных", "красного", "красной", "красному", "красным", "красном"]
   ]
 
 isSameRoot :: [Text] -> Assertion

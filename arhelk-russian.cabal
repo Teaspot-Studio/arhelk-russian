@@ -15,10 +15,28 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Arhelk.Russian.Lemma
+  exposed-modules:     
+                      Arhelk.Russian.Lemma
+                      Arhelk.Russian.Lemma.Data
+                      Arhelk.Russian.Rule
+
   build-depends:       base >= 4.7 && < 5
+                     , lens-simple
+                     , mtl
                      , text
+                     , text-show
+
   default-language:    Haskell2010
+  default-extensions:  
+                       DeriveFunctor
+                       FlexibleInstances
+                       GeneralizedNewtypeDeriving
+                       MultiParamTypeClasses
+                       OverloadedStrings
+                       RankNTypes
+                       TemplateHaskell
+                       ScopedTypeVariables
+                       RecordWildCards
 
 test-suite arhelk-russian-test
   type:                exitcode-stdio-1.0
@@ -33,7 +51,8 @@ test-suite arhelk-russian-test
                      , QuickCheck
                      , quickcheck-instances
                      , text
-
+                     , text-show
+                     
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
   default-extensions:  OverloadedStrings

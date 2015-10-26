@@ -3,7 +3,7 @@ module Test.Arhelk.Russian.Lemma(
   ) where 
 
 import Arhelk.Russian.Lemma
-import Arhelk.Russian.Rule
+import Arhelk.Core.Rule
 import Data.List as L
 import Data.Monoid
 import Data.Text as T

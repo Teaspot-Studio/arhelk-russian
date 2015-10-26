@@ -1,5 +1,8 @@
 flags: {}
 packages:
 - '.'
+- location:
+    git: git@github.com:Teaspot-Studio/arhelk-core.git
+    commit: ed8fd1b49b8f35090285bec86e73de53cedb7fe4
 extra-deps: []
 resolver: lts-8.3

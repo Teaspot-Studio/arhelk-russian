@@ -18,9 +18,9 @@ library
   exposed-modules:     
                       Arhelk.Russian.Lemma
                       Arhelk.Russian.Lemma.Data
-                      Arhelk.Russian.Rule
 
   build-depends:       base >= 4.7 && < 5
+                     , arhelk-core
                      , lens-simple
                      , mtl
                      , text
@@ -43,13 +43,14 @@ test-suite arhelk-russian-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , arhelk-core
                      , arhelk-russian
-                     , test-framework
-                     , test-framework-quickcheck2
-                     , test-framework-hunit
                      , HUnit
                      , QuickCheck
                      , quickcheck-instances
+                     , test-framework
+                     , test-framework-hunit
+                     , test-framework-quickcheck2
                      , text
                      , text-show
                      

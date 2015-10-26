@@ -8,7 +8,7 @@ module Arhelk.Russian.Lemma(
   ) where 
 
 import Arhelk.Russian.Lemma.Data as X
-import Arhelk.Russian.Rule
+import Arhelk.Core.Rule
 import Control.Monad
 import Data.Text as T
 import Lens.Simple
@@ -155,3 +155,8 @@ adjective w = do
       when (w `endsWith` ["ой", "ей"]) $ imply adjGender GrammarFemale
     propose adjQuantity GrammarMultiple $ do
       when (w `endsWith` ["ых", "их"]) implyNothing
+
+{-
+verb :: Text -> Rule VerbProperties
+verb w = return ()
+-}

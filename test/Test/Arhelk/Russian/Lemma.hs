@@ -17,7 +17,7 @@ testModule = TF.testGroup "Lemmanization" [
     testCase "Root дерев" $ isSameRoot ["дерево", "деревья", "дерева", "деревьев", "дереве"]
   , testCase "Root красн" $ isSameRoot ["красный", "красная", "красное", "красные", "красных", "красного", "красной", "красному", "красным", "красном"]
   , testCase "Root сказ" $ isSameRoot ["сказать", "подсказать", "пересказать", "сказал", "сказала", "пересказала", "сказало", "подсказало", "досказал"]
-  , testCase "Substantive деревьев" $ assertFailure $ unpack $ showt $ runRule $ genderByDeclension $ substantive "деревьев"
+  , testCase "Substantive деревьев" $ assertFailure $ unpack $ showt $ runRule $ substantive "деревьев"
   , testCase "Adjective красный" $ assertFailure $ unpack $ showt $ runRule $ adjective "красный"
   , testCase "Verb ковать" $ assertFailure $ unpack $ showt $ runRule $ verb "ковать"
   , testCase "Verb куют" $ assertFailure $ unpack $ showt $ runRule $ verb "куют"

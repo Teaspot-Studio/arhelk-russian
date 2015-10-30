@@ -17,8 +17,18 @@ library
   hs-source-dirs:      src
   exposed-modules:     
                       Arhelk.Russian.Lemma
+                      Arhelk.Russian.Lemma.Adjective
+                      Arhelk.Russian.Lemma.Adverb
+                      Arhelk.Russian.Lemma.Common
                       Arhelk.Russian.Lemma.Data
-
+                      Arhelk.Russian.Lemma.Data.Adjective
+                      Arhelk.Russian.Lemma.Data.Adverb
+                      Arhelk.Russian.Lemma.Data.Common
+                      Arhelk.Russian.Lemma.Data.Substantive
+                      Arhelk.Russian.Lemma.Data.Verb
+                      Arhelk.Russian.Lemma.Substantive
+                      Arhelk.Russian.Lemma.Verb
+                      
   build-depends:       base >= 4.7 && < 5
                      , arhelk-core
                      , lens-simple

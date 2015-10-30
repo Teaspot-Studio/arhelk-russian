@@ -156,7 +156,5 @@ adjective w = do
     propose adjQuantity GrammarMultiple $ do
       when (w `endsWith` ["ых", "их"]) implyNothing
 
-{-
 verb :: Text -> Rule VerbProperties
 verb w = return ()
--}

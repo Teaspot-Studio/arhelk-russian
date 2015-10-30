@@ -3,6 +3,6 @@ packages:
 - '.'
 - location:
     git: git@github.com:Teaspot-Studio/arhelk-core.git
-    commit: ed8fd1b49b8f35090285bec86e73de53cedb7fe4
+    commit: 140edab4c4225bab9eb91ad7dbe5b952c831a70b
 extra-deps: []
 resolver: lts-8.3

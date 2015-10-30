@@ -4,6 +4,8 @@ module Arhelk.Russian.Lemma(
   , substantive
   , adjective
   , genderByDeclension
+  , verb
+  , adverb
   , module X
   ) where 
 
@@ -156,5 +158,50 @@ adjective w = do
     propose adjQuantity GrammarMultiple $ do
       when (w `endsWith` ["ых", "их"]) implyNothing
 
+-- | Tries to guess verb properties by endings
 verb :: Text -> Rule VerbProperties
-verb w = return ()
+verb w = do 
+  infinitive 
+  conjugation
+  pastTime
+  where
+
+  -- Infinitive endings
+  infinitive = do 
+    propose verbMood ModusInfinitivus $ do 
+      when (w `endsWith` ["еть", "овать", "ать", "ять"]) $ imply verbConjugation FirstConjugation -- with many exceptions
+
+  -- Guess by conjugation 
+  conjugation = proposeMany verbTime [PresentTime, FutureTime] $ do  
+    propose verbPerson FirstPerson $ do 
+      propose verbQuantity GrammarSingle $ do
+        when (w `endsWith` ["у", "ю"]) $ do
+          imply verbConjugation FirstConjugation
+          imply verbConjugation SecondConjugation
+      propose verbQuantity GrammarMultiple $ do 
+        when (w `endsWith` ["ем"]) $ imply verbConjugation FirstConjugation
+        when (w `endsWith` ["им"]) $ imply verbConjugation SecondConjugation
+    propose verbPerson SecondPerson $ do 
+      propose verbQuantity GrammarSingle $ do 
+        when (w `endsWith` ["ешь"]) $ imply verbConjugation FirstConjugation
+        when (w `endsWith` ["ишь"]) $ imply verbConjugation SecondConjugation
+      propose verbQuantity GrammarMultiple $ do 
+        when (w `endsWith` ["ете"]) $ imply verbConjugation FirstConjugation
+        when (w `endsWith` ["ите"]) $ imply verbConjugation SecondConjugation
+    propose verbPerson ThirdPerson $ do 
+      propose verbQuantity GrammarSingle $ do 
+        when (w `endsWith` ["ет"]) $ imply verbConjugation FirstConjugation
+        when (w `endsWith` ["ит"]) $ imply verbConjugation SecondConjugation
+      propose verbQuantity GrammarMultiple $ do 
+        when (w `endsWith` ["ут", "ют"]) $ imply verbConjugation FirstConjugation
+        when (w `endsWith` ["ат", "ят"]) $ imply verbConjugation SecondConjugation
+
+  pastTime = propose verbTime PastTime $ do 
+    when (w `endsWith` ["л"]) $ imply verbGender GrammarMale
+    when (w `endsWith` ["ла"]) $ imply verbGender GrammarFemale
+    when (w `endsWith` ["ли"]) $ imply verbQuantity GrammarMultiple
+
+adverb :: Text -> Rule AdverbProperties
+adverb w = do 
+  when (w `endsWith` ["о"]) $ imply adverbDegree PositiveDegree
+  when (w `endsWith` ["е"]) $ imply adverbDegree ComparitiveDegree

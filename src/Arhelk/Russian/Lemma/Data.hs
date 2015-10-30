@@ -170,6 +170,7 @@ data GrammarMood =
     ModusIndicativus -- ^ Изъявительное
   | ModusConditionalis -- ^ Условное
   | ModusImperativus -- ^ Повелительное
+  | ModusInfinitivus -- ^ Инфинитив
   deriving (Eq, Ord, Enum, Show, Bounded)
 
 instance TextShow GrammarMood where 
@@ -177,7 +178,8 @@ instance TextShow GrammarMood where
     ModusIndicativus -> "изъяв."
     ModusConditionalis -> "усл."
     ModusImperativus -> "повел."
-
+    ModusInfinitivus -> "инф."
+    
 -- | Вид глагола
 data GrammarAspect = 
     PerfectiveAspect -- ^ Совершенный вид
@@ -334,4 +336,24 @@ instance TextShow VerbProperties where
     , maybe "" showb _verbGender
     , maybe "" showb _verbVoice
     , maybe "" showb _verbConjugation
+    ]
+
+data AdverbProperties = AdverbProperties {
+  _adverbDegree :: Maybe AdjectiveDegree
+} deriving (Eq, Show)
+
+$(makeLenses ''AdverbProperties)
+
+instance Monoid AdverbProperties where 
+  mempty = AdverbProperties {
+    _adverbDegree = Nothing
+  }
+
+  mappend a b = AdverbProperties {
+    _adverbDegree = getFirst $ First (_adverbDegree a) <> First (_adverbDegree b)
+  }
+
+instance TextShow AdverbProperties where
+  showb AdverbProperties{..} = unwordsB [
+      maybe "" showb _adverbDegree
     ]

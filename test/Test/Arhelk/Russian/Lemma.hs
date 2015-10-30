@@ -25,6 +25,7 @@ testModule = TF.testGroup "Lemmanization" [
   , testCase "Verb сказал" $ assertFailure $ unpack $ showt $ runRule $ verb "сказал"
   , testCase "Adverb тихо" $ assertFailure $ unpack $ showt $ runRule $ adverb "тихо"
   , testCase "Adverb тише" $ assertFailure $ unpack $ showt $ runRule $ adverb "тише"
+  , testCase "Particle бы" $ assertFailure $ unpack $ showt $ runRule $ particle "бы"
   ]
 
 -- | Succedes only when all roots of words are equal

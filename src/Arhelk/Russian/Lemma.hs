@@ -8,6 +8,7 @@ import Arhelk.Core.Rule
 import Arhelk.Russian.Lemma.Adjective as X
 import Arhelk.Russian.Lemma.Adverb as X
 import Arhelk.Russian.Lemma.Data as X
+import Arhelk.Russian.Lemma.Particle as X
 import Arhelk.Russian.Lemma.Substantive as X
 import Arhelk.Russian.Lemma.Verb as X
 import Control.Monad

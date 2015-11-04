@@ -2,11 +2,13 @@ module Test.Arhelk.Russian.Lemma(
     testModule
   ) where 
 
-import Arhelk.Russian.Lemma
 import Arhelk.Core.Rule
+import qualified Arhelk.Lexer as L
+import Arhelk.Russian.Lemma
 import Data.List as L
 import Data.Monoid
 import Data.Text as T
+import Prelude hiding (Word)
 import qualified Test.Framework as TF
 import Test.Framework.Providers.HUnit
 import Test.HUnit
@@ -30,8 +32,18 @@ testModule = TF.testGroup "Lemmanization" [
 
 -- | Succedes only when all roots of words are equal
 isSameRoot :: [Text] -> Assertion
-isSameRoot ws = assertBool ("Roots are not equal for [" <> unpack (T.intercalate ", " ws) <> "]") $ allSame $ lemmaRoot . lemmanize <$> ws
-
+isSameRoot ws = do
+  let roots = extractRoot <$> ws 
+  assertBool ("Roots are not equal for [" <> unpack (T.intercalate ", " ws) <> "]") $ allSame roots
+  where
+  extractRoot :: Text -> Text
+  extractRoot w = case lemmanize . (\a -> [a]) . L.Word $ w of 
+    [] -> error $ "No lemmas: " <> unpack w
+    [a] -> case lemmaWord a of
+      OneWord {..} -> wordRoot
+      ws@(MultiWord {}) -> showt ws
+    as -> error $ "Too many lemmas: " <> unpack w <> " (" <> unpack (showt as) <> ")"
+  
 -- | Returns True if all elements in list are equal each other
 -- Note: allSame [] == True
 allSame :: Eq a => [a] -> Bool

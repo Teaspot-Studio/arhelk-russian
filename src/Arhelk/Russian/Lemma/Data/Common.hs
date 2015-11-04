@@ -2,37 +2,6 @@ module Arhelk.Russian.Lemma.Data.Common where
 
 import TextShow 
 
--- | Describes possible part of speach in Russian
-data SpeachPart = 
-    Substantive -- ^ Существительное
-  | Adjective -- ^ Прилагательное
-  | Numeral -- ^ Числительное
-  | Pronoun -- ^ Местоимение
-  | Verb -- ^ Глагол
-  | Adverb -- ^ Наречие
-  | Preposition -- ^ Предлог
-  | Conjunction -- ^ Союз
-  | GrammarParticle -- ^ Частица
-  | Interjection -- ^ Междуметие
-  | Participle -- ^ Причастие
-  | Transgressive -- ^ Деепричастие
-  deriving (Eq, Ord, Enum, Show, Bounded)
-
-instance TextShow SpeachPart where 
-  showb p = case p of 
-    Substantive -> "сущ."
-    Adjective -> "прил."
-    Numeral -> "числ."
-    Pronoun -> "мест."
-    Verb -> "гл."
-    Adverb -> "нар."
-    Preposition -> "предл."
-    Conjunction -> "союз"
-    GrammarParticle -> "част."
-    Interjection -> "межд."
-    Participle -> "прич."
-    Transgressive -> "деепр."
-
 -- | Род. Grammatical gender of word
 data GrammarGender = 
     GrammarMale -- ^ Мужской

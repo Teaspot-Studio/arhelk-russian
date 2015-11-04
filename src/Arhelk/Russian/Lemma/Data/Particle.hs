@@ -11,4 +11,4 @@ instance Monoid ParticleProperties where
   mappend a _ = a
 
 instance TextShow ParticleProperties where
-  showb _ = ""
+  showb _ = "()"

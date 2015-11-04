@@ -37,9 +37,9 @@ isSameRoot ws = do
   assertBool ("Roots are not equal for [" <> unpack (T.intercalate ", " ws) <> "]") $ allSame roots
   where
   extractRoot :: Text -> Text
-  extractRoot w = case lemmanize . (\a -> [a]) . L.Word $ w of 
+  extractRoot w = case lemmanize . (\a -> [[a]]) . UnknownWord $ w of 
     [] -> error $ "No lemmas: " <> unpack w
-    [a] -> case lemmaWord a of
+    [[a]] -> case lemmaWord a of
       OneWord {..} -> wordRoot
       ws@(MultiWord {}) -> showt ws
     as -> error $ "Too many lemmas: " <> unpack w <> " (" <> unpack (showt as) <> ")"

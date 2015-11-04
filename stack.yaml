@@ -3,9 +3,9 @@ packages:
 - '.'
 - location:
     git: git@github.com:Teaspot-Studio/arhelk-core.git
-    commit: 140edab4c4225bab9eb91ad7dbe5b952c831a70b
+    commit: 70d9e06ad968bce1d6a7c72695905cf856ec1ad7
 - location:
     git: git@github.com:Teaspot-Studio/arhelk-lexer.git
-    commit: c581a1f317786de7750d3b427e43b523c74e46c7
+    commit: 385b0d8d49f843381bacfc73e648db24cf2045e8
 extra-deps: []
-resolver: lts-3.10
+resolver: lts-3.12

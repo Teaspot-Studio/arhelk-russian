@@ -50,6 +50,10 @@ library
                        TemplateHaskell
                        ScopedTypeVariables
                        RecordWildCards
+                       BangPatterns
+                       DataKinds
+                       TypeOperators
+                       TypeFamilies
 
 test-suite arhelk-russian-test
   type:                exitcode-stdio-1.0

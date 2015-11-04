@@ -1,14 +1,13 @@
 module Arhelk.Russian.Lemma(
     Lemma(..)
   , Word(..)
+  , makeSentence
   , lemmanize
   , lemmaWord
   , module X
   ) where 
 
-import Prelude hiding (Word)
 import Arhelk.Core.Rule
-import qualified Arhelk.Lexer as L
 import Arhelk.Russian.Lemma.Adjective as X
 import Arhelk.Russian.Lemma.Adverb as X
 import Arhelk.Russian.Lemma.Data as X
@@ -16,8 +15,12 @@ import Arhelk.Russian.Lemma.Particle as X
 import Arhelk.Russian.Lemma.Substantive as X
 import Arhelk.Russian.Lemma.Verb as X
 import Control.Monad
+import Data.Maybe 
 import Data.Text as T
 import Lens.Simple
+import Prelude hiding (Word)
+import qualified Arhelk.Lexer as L
+import qualified Data.List as DL
 import TextShow
 
 -- | Parsed word with detached prefixes, postfixes and determinied speach part
@@ -97,9 +100,43 @@ lemmaWord l = case l of
   Participle a -> a
   Transgressive a -> a
 
--- | Any sentence is list of lemmas
-type Sentence a = [Lemma a]
+-- | Sentence clause, region enclosed with commas
+type SentenceClause a = [Lemma a]
+
+-- | Any sentence is list of sentence clauses
+type Sentence a = [SentenceClause a]
+
+-- | Transforms list of tokens into sentence with clauses
+makeSentence :: [L.Token ()] -> Sentence Text 
+makeSentence ts = go [] ts 
+  where
+    go acc [] = acc 
+    go acc tss = let 
+      (clauses, tss') = getClause tss
+      in case tss' of 
+        [] -> acc ++ clauses
+        _ -> go (acc ++ clauses) tss'
+
+    getClause :: [L.Token ()] -> ([SentenceClause Text], [L.Token ()])
+    getClause tss = case DL.findIndex isClauseBound tss of
+      Nothing -> ([makeClause tss], [])
+      Just i -> let
+        (pre, x:post) = DL.splitAt i tss
+        in case x of 
+          L.Quotation qs -> (makeClause pre : makeSentence qs, post)
+          _ -> ([makeClause pre], post)
+      where
+        isClauseBound a = a == L.Comma || a == L.Semicolon || a == L.Citation || a == L.Dash || isQuotation a 
+        isQuotation (L.Quotation _) = True 
+        isQuotation _ = False
+
+    makeClause :: [L.Token ()] -> SentenceClause Text 
+    makeClause = catMaybes . fmap processToken
+      where
+        processToken t = case t of 
+          L.Word a -> Just $ UnknownWord a 
+          _ -> Nothing
 
 -- | Try to parse sentence
-lemmanize :: [L.Token a] -> Sentence Word
+lemmanize :: Sentence Text -> Sentence Word
 lemmanize = error "unimplemented"

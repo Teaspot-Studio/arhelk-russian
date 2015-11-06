@@ -81,6 +81,10 @@ testModule = TF.testGroup "Lemmanization" [
       testCase "glue [[вряд, ли(?), бы], [вряд(?), ли(?), бы(?)]]" $ assertBool (unpack $ showt d1) $ d1 == d2
 
     ]
+  , TF.testGroup "linerizeHypothesis" [
+      testCase "[[1], [2, 3], [4]]" $ assertEqual "" [[1, 2, 4], [1, 3, 4]] (linerizeHypothesis [[1], [2, 3], [4]]) 
+    , testCase "[[1, 2], [3, 4]]" $ assertEqual "" [[1, 3], [1, 4], [2, 3], [2, 4]] (linerizeHypothesis [[1, 2], [3, 4]]) 
+    ]
   ]
 
 -- | Makes sentence clause
@@ -98,11 +102,12 @@ isSameRoot ws = do
   assertBool ("Roots are not equal for [" <> unpack (T.intercalate ", " ws) <> "]") $ allSame roots
   where
   extractRoot :: Text -> Text
-  extractRoot w = case lemmanize . (\a -> [[a]]) . UnknownWord $ w of 
+  extractRoot w = case lemmanizeClause . (\a -> [a]) . UnknownWord $ w of 
     [] -> error $ "No lemmas: " <> unpack w
-    [[a]] -> case lemmaWord a of
-      OneWord {..} -> wordRoot
-      ws@(MultiWord {}) -> showt ws
+    [[a]] -> case unSemiProcWord $ lemmaWord a of
+      Right (OneWord {..}) -> wordRoot
+      Right (ws@(MultiWord {})) -> showt ws
+      Left w -> error $ "Not lemmanized " <> unpack w
     as -> error $ "Too many lemmas: " <> unpack w <> " (" <> unpack (showt as) <> ")"
   
 -- | Returns True if all elements in list are equal each other

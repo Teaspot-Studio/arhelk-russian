@@ -28,7 +28,7 @@ import TextShow
 type RawWord = Text 
 
 -- | Shortcut for semiprocessed word
-newtype SemiProcWord = SemiProcWord (Either RawWord Word)
+newtype SemiProcWord = SemiProcWord { unSemiProcWord :: Either RawWord Word }
   deriving (Eq, Show)
 
 instance TextShow SemiProcWord where 
@@ -123,6 +123,22 @@ instance TextShow (Lemma Text) where
     Interjection a -> fromText a <> " (межд.)"
     Participle a -> fromText a <> " (прич.)"
     Transgressive a -> fromText a <> " (деепр.)"
+
+instance Functor Lemma where 
+  fmap f l = case l of 
+    UnknownWord a -> UnknownWord (f a)
+    Substantive a p -> Substantive (f a) p
+    Adjective a p -> Adjective (f a) p
+    Numeral a -> Numeral (f a)
+    Pronoun a -> Pronoun (f a)
+    Verb a p -> Verb (f a) p
+    Adverb a p -> Adverb (f a) p
+    Preposition a -> Preposition (f a)
+    Conjunction a -> Conjunction (f a)
+    GrammarParticle a p -> GrammarParticle (f a) p
+    Interjection a -> Interjection (f a)
+    Participle a -> Participle (f a)
+    Transgressive a -> Transgressive (f a)
 
 -- | Extract lemma content
 lemmaWord :: Lemma a -> a 

@@ -1,3 +1,4 @@
+resolver: lts-8.3
 flags: {}
 packages:
 - '.'
@@ -10,4 +11,3 @@ packages:
     commit: fb0365c3de4f4b4cf97452e31981bcf916fe7b0f
   extra-dep: true
 extra-deps: []
-resolver: lts-8.3

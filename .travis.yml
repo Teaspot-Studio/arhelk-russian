@@ -6,7 +6,10 @@ cache:
   - $HOME/.stack
 
 addons:
-  packages:
+  apt:
+    sources:
+    - hvr-ghc
+    packages:
     - libgmp-dev
 
 before_install:

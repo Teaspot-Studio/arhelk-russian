@@ -1,5 +1,13 @@
+resolver: lts-8.3
 flags: {}
 packages:
 - '.'
+- location:
+    git: https://github.com/Teaspot-Studio/arhelk-core.git
+    commit: 3aad2fd6e0fd575e3082727e5a2d962416ad8a24
+  extra-dep: true
+- location:
+    git: https://github.com/Teaspot-Studio/arhelk-lexer.git
+    commit: fb0365c3de4f4b4cf97452e31981bcf916fe7b0f
+  extra-dep: true
 extra-deps: []
-resolver: lts-8.3

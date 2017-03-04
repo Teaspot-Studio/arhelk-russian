@@ -1,2 +1,10 @@
+import Test.Framework
+import Test.Framework.Providers.QuickCheck2
+
+import qualified Test.Arhelk.Russian.Lemma as Lemma
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = defaultMainWithOpts [
+    Lemma.testModule
+  ]
+  mempty
